@@ -1,7 +1,17 @@
+using T2LifestyleChecker.Web.Services.Interfaces;
+using T2LifestyleChecker.Web.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<IPatientService, PatientService>();
+builder.Services.AddHttpClient("PatientApi", client =>
+{
+    client.BaseAddress = new Uri(
+        builder.Configuration["PatientApi:BaseUrl"]!
+    );
+});
 
 var app = builder.Build();
 

@@ -9,7 +9,7 @@ namespace T2LifestyleChecker.Web.ViewModels
         [Required(ErrorMessage = "Name is required")]
         public string Name { get; set; }
         [Required(ErrorMessage = "Date of Birth is required")]
-        public string Born { get; set; }
+        public DateTime Born { get; set; }
 
     }
 }
