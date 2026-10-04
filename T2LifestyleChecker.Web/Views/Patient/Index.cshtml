@@ -1,0 +1,47 @@
+﻿@model T2LifestyleChecker.Web.ViewModels.PatientDetailsViewModel
+
+@{
+    ViewData["Title"] = "Patient Details";
+}
+
+<h1>Patient Details</h1>
+
+<p>Please enter your details below.</p>
+
+<form asp-controller="Patient" asp-action="Index" method="post">
+
+    <div class="mb-3">
+        <label asp-for="NHSNumber" class="form-label">
+            NHS Number
+        </label>
+
+        <input asp-for="NHSNumber" class="form-control" />
+
+        <span asp-validation-for="NHSNumber" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label">
+            Surname
+        </label>
+
+        <input asp-for="Name" class="form-control" />
+
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Born" class="form-label">
+            Date of Birth
+        </label>
+
+        <input asp-for="Born" class="form-control" type="date" />
+
+        <span asp-validation-for="Born" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        Continue
+    </button>
+
+</form>
