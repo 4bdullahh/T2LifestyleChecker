@@ -54,6 +54,23 @@ namespace T2LifestyleChecker.Web.Controllers
                 return Content("Your details could not be found");
             }
 
+            var today = DateTime.Today;
+
+            var age = today.Year - apiDateOfBirth.Year;
+
+            if (apiDateOfBirth.Date > today.AddYears(-age))
+            {
+                age--;
+            }
+
+            if (age < 16)
+            {
+                return Content(
+                    "You are not eligible for this service");
+            }
+
+            HttpContext.Session.SetInt32("PatientAge", age);
+
             return Content(
                 $"Patient found: {patient.Name}\n" +
                 $"NHS Number: {patient.NHSNumber}\n" +
