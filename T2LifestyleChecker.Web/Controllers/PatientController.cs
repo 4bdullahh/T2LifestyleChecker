@@ -71,11 +71,7 @@ namespace T2LifestyleChecker.Web.Controllers
 
             HttpContext.Session.SetInt32("PatientAge", age);
 
-            return Content(
-                $"Patient found: {patient.Name}\n" +
-                $"NHS Number: {patient.NHSNumber}\n" +
-                $"DOB: {patient.Born}"
-            );
+            return RedirectToAction("Index", "Questionnaire");
 
         }
     }

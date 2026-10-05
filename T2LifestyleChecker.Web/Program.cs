@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IPatientService, PatientService>();
+builder.Services.AddScoped<IScoringService, ScoringService>(); 
 builder.Services.AddSession();
 builder.Services.AddHttpClient("PatientApi", client =>
 {
