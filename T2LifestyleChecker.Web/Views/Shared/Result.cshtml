@@ -1,0 +1,20 @@
+﻿@model T2LifestyleChecker.Web.ViewModels.ResultViewModel
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="text-center">
+    <h1>@Model.Title</h1>
+
+    <p>
+        @Model.Message
+    </p>
+
+    @if (Model.Score.HasValue)
+    {
+        <p>
+            <strong>Your score: @Model.Score</strong>
+        </p>
+    }
+</div>

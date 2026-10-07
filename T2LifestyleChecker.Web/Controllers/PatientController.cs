@@ -31,7 +31,12 @@ namespace T2LifestyleChecker.Web.Controllers
 
             if (patient == null)
             {
-                return Content("Your details could not be found");
+                return View("~/Views/Shared/Result.cshtml", new ResultViewModel
+                {
+                    Title = "Details not found",
+                    Message = "Your details could not be found",
+                    IsError = true
+                });
             }
 
             var nhsNumberMatch = model.NHSNumber == patient.NHSNumber;
@@ -43,15 +48,24 @@ namespace T2LifestyleChecker.Web.Controllers
                 DateTimeStyles.None,
                 out var apiDateOfBirth))
             {
-                return Content(
-                    "There was a problem reading the patient date of birth.");
+                return View("~/Views/Shared/Result.cshtml", new ResultViewModel
+                {
+                    Title = "Error",
+                    Message = "There was a problem reading the patient date of birth.",
+                    IsError = true
+                });
             }
             var birthDatesMatch = model.Born == apiDateOfBirth;
 
 
             if (!nhsNumberMatch || !surnameMatch || !birthDatesMatch)
             {
-                return Content("Your details could not be found");
+                return View("~/Views/Shared/Result.cshtml", new ResultViewModel
+                {
+                    Title = "Details not found",
+                    Message = "Your details could not be found",
+                    IsError = true
+                });
             }
 
             var today = DateTime.Today;
@@ -65,8 +79,12 @@ namespace T2LifestyleChecker.Web.Controllers
 
             if (age < 16)
             {
-                return Content(
-                    "You are not eligible for this service");
+                return View("~/Views/Shared/Result.cshtml", new ResultViewModel
+                {
+                    Title = "Not eligible",
+                    Message = "You are not eligible for this service",
+                    IsError = true
+                });
             }
 
             HttpContext.Session.SetInt32("PatientAge", age);

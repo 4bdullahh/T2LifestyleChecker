@@ -50,7 +50,24 @@ namespace T2LifestyleChecker.Web.Controllers
                 model.Smokes!.Value,
                 model.ExercisesMoreThanOneHour!.Value);
 
-            return Content($"Your score is: {score}");
+            if (score <= 3)
+            {
+                return View("~/Views/Shared/Result.cshtml", new ResultViewModel
+                {
+                    Title = "Thank you",
+                    Message = "Thank you for answering our questions, we don't need to see you at this time. Keep up the good work!",
+                    Score = score,
+                    IsError = false
+                });
+            }
+
+            return View("~/Views/Shared/Result.cshtml", new ResultViewModel
+            {
+                Title = "Your results",
+                Message = "We think there are some simple things you could do to improve your quality of life, please phone to book an appointment",
+                Score = score,
+                IsError = false
+            });
         }
     }
 }
