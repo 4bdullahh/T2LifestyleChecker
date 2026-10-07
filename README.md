@@ -1,8 +1,8 @@
 # T2 Lifestyle Checker
-An ASP.NET Core MVC lifestyle questionnaire application
+An ASP.NET Core MVC lifestyle questionnaire application.
 
 ## Running the application
-Open the project in Visual Studio and run it
+Open the project in Visual Studio and run it.
 Make sure the API subscription key is set up in User Secrets.
 
 The SQLite database will be created automatically when the application starts.
@@ -11,8 +11,8 @@ The SQLite database will be created automatically when the application starts.
 Enter the patient's NHS number, surname and date of birth.
 If the details are correct and the patient is 16 or over, they can complete the questionnaire.
 
-The questionaire asks about drinking, smoking and exercise.
-The answers are scored based on the patients age. The result is then shown on the results page.
+The questionnaire asks about drinking, smoking and exercise.
+The answers are scored based on the patient's age. The result is then shown on the results page.
 
 Patients under 16 are not eligible.
 
