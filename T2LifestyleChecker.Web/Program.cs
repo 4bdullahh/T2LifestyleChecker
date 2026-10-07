@@ -1,5 +1,7 @@
-using T2LifestyleChecker.Web.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using T2LifestyleChecker.Web.Data;
 using T2LifestyleChecker.Web.Services;
+using T2LifestyleChecker.Web.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,8 +16,18 @@ builder.Services.AddHttpClient("PatientApi", client =>
         builder.Configuration["PatientApi:BaseUrl"]!
     );
 });
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider
+        .GetRequiredService<ApplicationDbContext>();
+
+    DbInitializer.Initialize(context);
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

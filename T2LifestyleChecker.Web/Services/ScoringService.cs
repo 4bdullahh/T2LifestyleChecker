@@ -1,62 +1,64 @@
-﻿using T2LifestyleChecker.Web.Services.Interfaces;
+﻿using T2LifestyleChecker.Web.Data;
+using T2LifestyleChecker.Web.Services.Interfaces;
 
 namespace T2LifestyleChecker.Web.Services
 {
     public class ScoringService : IScoringService
     {
+        private readonly ApplicationDbContext _context;
+
+        public ScoringService(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
         public int CalculateScore(
             int age,
             bool drinksMoreThanTwoDays,
             bool smokes,
             bool exercisesMoreThanOneHour)
         {
-            int q1Points;
-            int q2Points;
-            int q3Points;
+            string ageBand;
 
-            if (age >= 16 && age <= 21)
+            switch (age)
             {
-                q1Points = 1;
-                q2Points = 2;
-                q3Points = 1;
+                case >= 16 and <= 21:
+                    ageBand = "16-21";
+                    break;
+
+                case >= 22 and <= 40:
+                    ageBand = "22-40";
+                    break;
+
+                case >= 41 and <= 65:
+                    ageBand = "41-65";
+                    break;
+
+                case >= 66:
+                    ageBand = "66+";
+                    break;
+
+                default:
+                    throw new ArgumentException("No scoring rule exists for this age.");
             }
-            else if (age >= 22 && age <= 40)
-            {
-                q1Points = 2;
-                q2Points = 2;
-                q3Points = 3;
-            }
-            else if (age >= 41 && age <= 65)
-            {
-                q1Points = 3;
-                q2Points = 2;
-                q3Points = 2;
-            }
-            else if (age >= 66)
-            {
-                q1Points = 3;
-                q2Points = 3;
-                q3Points = 1;
-            }
-            else
-            {
-                throw new ArgumentException(
-                    "Patient must be at least 16 years old.");
-            }
+
+            var rule = _context.ScoringRules.FirstOrDefault(x => x.AgeBand == ageBand);
 
             int score = 0;
 
             if (drinksMoreThanTwoDays)
             {
-                score += q1Points;
+                score = score + rule.Q1Points;
             }
+
             if (smokes)
             {
-                score += q2Points;
+                score = score + rule.Q2Points;
             }
+
             if (!exercisesMoreThanOneHour)
             {
-                score += q3Points;
+                score = score + rule.Q3Points;
             }
 
             return score;
