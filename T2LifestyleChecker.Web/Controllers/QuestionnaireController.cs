@@ -27,6 +27,7 @@ namespace T2LifestyleChecker.Web.Controllers
             return View();
         }
 
+        // Responsible for handling the form submission and validating the questionnaire answers
         [HttpPost]
         public IActionResult Index(QuestionnaireViewModel model)
         {

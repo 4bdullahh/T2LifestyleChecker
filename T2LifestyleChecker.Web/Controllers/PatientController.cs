@@ -19,6 +19,7 @@ namespace T2LifestyleChecker.Web.Controllers
             return View();
         }
 
+        // Responsible for handling the form submission and validating the patient details
         [HttpPost]
         public async Task<IActionResult> Index(PatientDetailsViewModel model)
         {
@@ -27,6 +28,7 @@ namespace T2LifestyleChecker.Web.Controllers
                 return View(model);
             }
 
+            // Call the patient service to get the patient details based on the provided nhs number
             var patient = await _patientService.GetPatientAsync(model.NHSNumber);
 
             if (patient == null)
@@ -39,6 +41,7 @@ namespace T2LifestyleChecker.Web.Controllers
                 });
             }
 
+            // Compare the details from the API with the user input
             var nhsNumberMatch = model.NHSNumber == patient.NHSNumber;
             var surnameMatch = model.Name.ToLower() == patient.Name.Split(',', StringSplitOptions.TrimEntries)[0].ToLower();
             if (!DateTime.TryParseExact(
@@ -57,7 +60,7 @@ namespace T2LifestyleChecker.Web.Controllers
             }
             var birthDatesMatch = model.Born == apiDateOfBirth;
 
-
+            
             if (!nhsNumberMatch || !surnameMatch || !birthDatesMatch)
             {
                 return View("~/Views/Shared/Result.cshtml", new ResultViewModel
@@ -87,6 +90,7 @@ namespace T2LifestyleChecker.Web.Controllers
                 });
             }
 
+            // Store the patients age in the session for later use
             HttpContext.Session.SetInt32("PatientAge", age);
 
             return RedirectToAction("Index", "Questionnaire");

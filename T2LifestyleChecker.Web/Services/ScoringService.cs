@@ -42,10 +42,12 @@ namespace T2LifestyleChecker.Web.Services
                     throw new ArgumentException("No scoring rule exists for this age.");
             }
 
+            // Retrieve the scoring rule for the given age band from the database
             var rule = _context.ScoringRules.FirstOrDefault(x => x.AgeBand == ageBand);
 
             int score = 0;
 
+            // Calculate the score based on the scoring rule and the users answers
             if (drinksMoreThanTwoDays)
             {
                 score = score + rule.Q1Points;
